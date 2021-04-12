@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Doodlefan</title>
+	<meta name="author" content="Thanassis Frank">
+	<meta name="first version" content="2016">
+	<meta name="last commit" content="2021">
+	<meta name="version" content="0.4">
+</head>
+
+<body>
+	<link type="text/css" rel="stylesheet" href="doodlefan.css"/>
+		<table id="toolBar">
+			<tr>
+				<td rowspan="3">
+					<p class="label">Select tool:</p>
+					<p>
+						<select id="toolSelector" onChange="changeTool()">
+							<option>Normal</option>
+							<option>Squares</option>
+							<option>Spray</option>
+							<option>Chalk</option>
+							<option>Text stamp</option>
+							<option>Text stroke</option>
+							<option>I do not wish</option>
+							<option>Together</option>
+						</select>
+					</p>
+					<p id="textLabel" class="label">Input Text:</p>
+					<p>
+						<input id="textContent" size="18" placeholder="Your text here " type="text">
+					</p>
+				</td>
+				<td><p id="currentWidth" class="label">Width: 10px</p></td>
+				<td rowspan="3" id="previewCell"><p id="textPreview">Aa</p><canvas id="toolPreview"></canvas></td>
+				<td rowspan="3" class="">
+					<p class="label">Select a colour:</p>
+					<p>R <input type="range" id="redLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="255" value="0"/></p>
+					<p>G <input type="range" id="greenLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="255" value="0"/></p>
+					<p>B <input type="range" id="blueLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="255" value="0"/></p>
+					<p>A <input type="range" id="alphaLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="1" value="1" step="0.01"/></p>
+				</td>
+				
+				<td rowspan="2">
+					<p class="label">Select image:</p>
+					<p>
+						<select id="backgroundSelector" onChange="addImage()" onfocus="this.selectedIndex = -1">
+							<option>Blank</option>
+							<option>Bear 1</option>
+							<option>Bear 2</option>
+							<option>Man</option>
+							<option>Man blue</option>
+							<option>Dress</option>
+							<option>Dress blue</option>
+							<option>River</option>
+							<option>Page 1</option>
+							<option>Page 3</option>
+							<option>Page 4</option>
+							<option>Page 5</option>
+							<option>Page 6</option>
+							<option>Page 7</option>
+							<option>Page 8</option>
+							<option>Page 9</option>
+							<option>Page 10</option>
+							<option>Page 11</option>
+							<option>Page 12</option>
+							<option>Page 13</option>
+							<option>Page 14</option>
+							<option>Page 15</option>
+							<option>Page 18</option>
+						</select>
+					</p>
+				</td>
+				
+				
+				<td rowspan="2">
+					<p style="font-size:0.9em">
+						<strong>Doodlefan</strong><br> 
+						by <a href="github.com/TFrank366">Thanassis Frank</a><br>
+						licensed under CC-BY-NC<br>
+						<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
+							<img alt="Creative Commons License" style="border-width:0" title="Creative Commons Attribution-NonCommercial 4.0 International License" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" />
+						</a>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				
+				<td><input type="range" onMouseMove="changeWidth()" id="widthSlider" min="1" max="90" value="10"/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><button onClick="clearDoodles()">Clear doodles</button></td>
+				<td>
+					<button onClick="saveImage()">Save image</button>
+					<input id="nameInput" type="text" size="10" placeholder="Enter name">
+				</td>
+			</tr>
+		</table>
+
+		<canvas id="canvas" style="margin-top:120px">
+			sorry, your browser does not seem to support HTML 5 canvas
+		</canvas>
+		<canvas id="saveCanvas" style="display:none"></canvas>
+
+	<script src="doodlefan.js"></script>
+</body>
+</html>
