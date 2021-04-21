@@ -1,29 +1,119 @@
 /* wheels.css*/
 
-*{margin:0px; padding:0px; font-size:1em; font-family:Verdana, Geneva, sans-serif}
+:root {
+    --bg-col: #fff8e3;
+    --border-col: black;
+    --button-travel: 2px;
+}
 
-body{max-width:100%; max-height:100%; background-color:#fff8e3; text-align: center}
+*{
+    margin:0px; 
+    padding:0px; 
+    font-family:Verdana, 
+    Geneva, sans-serif
+}
+p {
+    font-size:1em; 
+}
+body{
+    max-width:100%; 
+    max-height:100%; 
+    background-color:var(--bg-col); 
+    text-align: center
+}
 
-table{position:absolute; height:120px; width:100%}
+table{
+    position:absolute; 
+    height:120px; 
+    width:100%
+}
 
-td{text-align:center}
+td{
+    text-align:center
+}
 
-input[type=text], button, select{cursor:pointer; padding: 3px}
+input[type=text], button, select{
+    cursor:pointer; 
+    padding: 3px
+}
 
-select{margin: 0px}
+select{
+    margin: 0px
+}
 
-.label{font-weight:bold}
+.label{
+    font-weight:bold
+}
 
-.leftAlign{text-align:left}
+.leftAlign{
+    text-align:left
+}
 
-.rightAlign{text-align:right}
+.rightAlign{
+    text-align:right
+}
 
-input[type=range]{width:10vw}
+input[type=range]{
+    width:10vw
+}
 
-#brushPreview{height:100px; width:100px}
+#brushPreview{
+    height:100px; 
+    width:100px
+}
 
-#textContent, #textLabel{display:none}
+#textContent, #textLabel{
+    display:none
+}
 
-#textPreview{display: none}
+#textPreview{
+    display: none
+}
 
-#previewCell{width:120px}
+#previewCell{
+    width:120px
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.popup{
+    background-color: var(--bg-col);
+    border: 1px solid var(--border-col);
+    max-width: 30%;
+    padding: 10px;
+    border-radius: 2px;
+}
+
+#popupCont {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 100vh;
+    width: 100vw;
+}
+
+.hidden {
+    display: none
+}
+
+/*
+button, .button {
+    background-color: var(--bg-col);
+    border: 2px solid var(--border-col);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.5em;
+    box-shadow: 0px var(--button-travel) var(--border-col);
+    margin-bottom: 0px;
+    transition: transform 0.1s linear, box-shadow 0.1s linear;
+}
+button:hover, .button:hover {
+    box-shadow: 0px 0px;
+    transform: translateY(var(--button-travel));
+}
+*/

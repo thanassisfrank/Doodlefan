@@ -6,102 +6,127 @@
 	<meta name="first version" content="2016">
 	<meta name="last commit" content="2021">
 	<meta name="version" content="0.4">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
 </head>
 
 <body>
 	<link type="text/css" rel="stylesheet" href="doodlefan.css"/>
-		<table id="toolBar">
-			<tr>
-				<td rowspan="3">
-					<p class="label">Select tool:</p>
-					<p>
-						<select id="toolSelector" onChange="changeTool()">
-							<option>Normal</option>
-							<option>Squares</option>
-							<option>Spray</option>
-							<option>Chalk</option>
-							<option>Text stamp</option>
-							<option>Text stroke</option>
-							<option>I do not wish</option>
-							<option>Together</option>
-						</select>
-					</p>
-					<p id="textLabel" class="label">Input Text:</p>
-					<p>
-						<input id="textContent" size="18" placeholder="Your text here " type="text">
-					</p>
-				</td>
-				<td><p id="currentWidth" class="label">Width: 10px</p></td>
-				<td rowspan="3" id="previewCell"><p id="textPreview">Aa</p><canvas id="toolPreview"></canvas></td>
-				<td rowspan="3" class="">
-					<p class="label">Select a colour:</p>
-					<p>R <input type="range" id="redLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="255" value="0"/></p>
-					<p>G <input type="range" id="greenLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="255" value="0"/></p>
-					<p>B <input type="range" id="blueLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="255" value="0"/></p>
-					<p>A <input type="range" id="alphaLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="1" value="1" step="0.01"/></p>
-				</td>
-				
-				<td rowspan="2">
-					<p class="label">Select image:</p>
-					<p>
-						<select id="backgroundSelector" onChange="addImage()" onfocus="this.selectedIndex = -1">
-							<option>Blank</option>
-							<option>Bear 1</option>
-							<option>Bear 2</option>
-							<option>Man</option>
-							<option>Man blue</option>
-							<option>Dress</option>
-							<option>Dress blue</option>
-							<option>River</option>
-							<option>Page 1</option>
-							<option>Page 3</option>
-							<option>Page 4</option>
-							<option>Page 5</option>
-							<option>Page 6</option>
-							<option>Page 7</option>
-							<option>Page 8</option>
-							<option>Page 9</option>
-							<option>Page 10</option>
-							<option>Page 11</option>
-							<option>Page 12</option>
-							<option>Page 13</option>
-							<option>Page 14</option>
-							<option>Page 15</option>
-							<option>Page 18</option>
-						</select>
-					</p>
-				</td>
-				
-				
-				<td rowspan="2">
-					<p style="font-size:0.9em">
-						<strong>Doodlefan</strong><br> 
-						by <a href="https://www.github.com/TFrank366">Thanassis Frank</a><br>
-						licensed under CC-BY-NC<br>
-						<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
-							<img alt="Creative Commons License" style="border-width:0" title="Creative Commons Attribution-NonCommercial 4.0 International License" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" />
-						</a>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				
-				<td><input type="range" onMouseMove="changeWidth()" id="widthSlider" min="1" max="90" value="10"/></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><button onClick="clearDoodles()">Clear doodles</button></td>
-				<td>
-					<button onClick="saveImage()">Save image</button>
-					<input id="nameInput" type="text" size="10" placeholder="Enter name">
-				</td>
-			</tr>
-		</table>
+	<table id="toolBar">
+		<tr>
+			<td rowspan="3">
+				<p class="label">Select brush:</p>
+				<p>
+					<select id="toolSelector" onChange="changeTool()">
+						<option>Normal</option>
+						<option>Squares</option>
+						<option>Spray</option>
+						<option>Chalk</option>
+						<option>Text stamp</option>
+						<option>Text brush</option>
+						<option>Story brush</option>
+					</select>
+				</p>
+				<p id="textLabel" class="label">Input Text:</p>
+				<p>
+					<input id="textContent" size="18" placeholder="Your text here " type="text">
+				</p>
+			</td>
+			<td><p id="currentWidth" class="label">Width: 10px</p></td>
+			<td rowspan="3" id="previewCell"><p id="textPreview">Aa</p><canvas id="toolPreview"></canvas></td>
+			<td rowspan="3" class="">
+				<p class="label">Select a colour:</p>
+				<p>R <input type="range" id="redLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="255" value="0"/></p>
+				<p>G <input type="range" id="greenLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="255" value="0"/></p>
+				<p>B <input type="range" id="blueLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="255" value="0"/></p>
+				<p>A <input type="range" id="alphaLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="1" value="1" step="0.01"/></p>
+			</td>
+			
+			<td rowspan="2">
+				<p class="label">Select scene:</p>
+				<p>
+					<select id="backgroundSelector" onChange="addImage()" onfocus="this.selectedIndex = -1">
+						<option>Blank</option>
+						<!--
+						<option>Bear 1</option>
+						<option>Bear 2</option>
+						<option>Man</option>
+						<option>Man blue</option>
+						<option>Dress</option>
+						<option>Dress blue</option>
+						-->
+						<option>River</option>
+						<option>Scene 1</option>
+						<option>Scene 3</option>
+						<option>Scene 4</option>
+						<option>Scene 5</option>
+						<option>Scene 6</option>
+						<option>Scene 7</option>
+						<option>Scene 8</option>
+						<option>Scene 9</option>
+						<option>Scene 10</option>
+						<option>Scene 11</option>
+						<option>Scene 12</option>
+						<option>Scene 13</option>
+						<option>Scene 14</option>
+						<option>Scene 15</option>
+						<option>Bonus</option>
+					</select>
+				</p>
+			</td>
+			
+			
+			<td rowspan="2">
+				<p style="font-size:0.9em">
+					<strong>Doodlefan</strong> for <a href="https://zenodo.org/record/4703978#.YICSUehKg2w">Together</a><br> 
+					by <a href="https://www.github.com/TFrank366">Thanassis Frank</a><br>
+					licensed under CC-BY-NC<br>
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
+						<img alt="Creative Commons License" style="border-width:0" title="Creative Commons Attribution-NonCommercial 4.0 International License" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" />
+					</a>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			
+			<td><input type="range" onMouseMove="changeWidth()" id="widthSlider" min="1" max="90" value="10"/></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><button onClick="clearDoodles()">Clear doodles</button></td>
+			<td>
+				<button onClick="saveImage()">Save image</button>
+				<input id="nameInput" type="text" size="10" placeholder="Enter name">
+			</td>
+		</tr>
+	</table>
 
-		<canvas id="canvas" style="margin-top:120px">
-			sorry, your browser does not seem to support HTML 5 canvas
-		</canvas>
-		<canvas id="saveCanvas" style="display:none"></canvas>
+	<canvas id="canvas" style="margin-top:120px">
+		sorry, your browser does not seem to support HTML 5 canvas
+	</canvas>
+	<canvas id="saveCanvas" style="display:none"></canvas>
+
+	<div id="popupCont" class="flex" onclick="hidePopup()">
+		<div class="popup">
+			<img src="images/logo.png" height="100px" alt="GO-GN logo1">
+			<img src="images/logo_hands.png" height="100px" alt="GO-GN logo2">
+			<h1>
+				Welcome to Doodlefan 
+				<br> 
+				for the GO-GN Picture Book Together
+			</h1>
+			<br>
+			<p>
+				Please select a scene to start doodling. 
+				<br><br> 
+				Check out our <strong>brushes</strong>. There you will find the <strong>text brush</strong> which allows you to add any text you want in any language and doodle with it.
+			</p>
+			<br>
+			<p>
+				You can also doodle using the text of the story by selecting <strong>Story brush</strong>.</p>
+			<br>
+			<p>Click anywhere to close this window and start doodling.</p>
+		</div>
+	</div>
 
 	<script src="doodlefan.js"></script>
 </body>

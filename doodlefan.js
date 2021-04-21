@@ -17,6 +17,8 @@ var textContent = document.getElementById("textContent");
 var textPreview = document.getElementById("textPreview");
 var textLabel = document.getElementById("textLabel");
 var nameInput = document.getElementById("nameInput");
+var popups = document.getElementsByClassName("popup");
+var popupCont = document.getElementById("popupCont");
 
 var inputText
 window.onload = () => {
@@ -54,13 +56,14 @@ var createImg = (url) => {
 	img.src = url;
 	return img;
 }
-urls = ["images/bear1.png", "images/bear2.png", "images/man.png", "images/man2.png", "images/dress.png", "images/dress2.png", "images/book/river.png"]
+urls = ["images/book/river.png"];//["images/bear1.png", "images/bear2.png", "images/man.png", "images/man2.png", "images/dress.png", "images/dress2.png", "images/book/river.png"]
 pages = [1, 3,  4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 18]
 var bgIMGs = ["clear"]
 
 for (let i = 0; i < urls.length; i++) {
 	bgIMGs.push(createImg(urls[i]));
 }
+
 for (let i = 0; i < pages.length; i++) {
 	bgIMGs.push(createImg("images/book/page" + pages[i] + ".png"));
 }
@@ -189,7 +192,7 @@ const story2 = "Together: One, two, three friends are on an adventure to build a
 var storyStroke = function (x ,y, context, width, color) {textStroke(x ,y, context, width, color, story)}
 var storyStroke2 = function (x ,y, context, width, color) {textStroke(x ,y, context, width, color, story2)}
 
-var tools = [normal, squares, spray, chalk, textStamp, textStroke, storyStroke, storyStroke2];
+var tools = [normal, squares, spray, chalk, textStamp, textStroke, storyStroke2];
 
 // canvas events ----------------------------------------------------------------
 
@@ -320,6 +323,16 @@ function saveImage(){
 	document.body.appendChild(download);
 	download.click();
 };
+
+function hideElement(elem) {
+	elem.classList.add("hidden");
+}
+function hidePopup(){
+	for (let i = 0; i < popups.length; i++) {
+		hideElement(popups[i]);
+	};
+	hideElement(popupCont);
+}
 
 // main function
 
