@@ -6,7 +6,7 @@
 	<meta name="first version" content="2016">
 	<meta name="last commit" content="2021">
 	<meta name="version" content="0.4">
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+	<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>-->
 </head>
 
 <body>
@@ -94,9 +94,9 @@
 			<td></td>
 			<td><button onClick="clearDoodles()">Clear doodles</button></td>
 			<td>
-				<button onClick="saveImage()">Save image</button>
+				<button onClick="openPopup('savePopup')">Save doodle</button>
 				<button onClick="openPopup('helpPopup')">Help</button>
-				<input id="nameInput" type="text" size="10" placeholder="Enter name" style="display:none">
+				
 			</td>
 		</tr>
 	</table>
@@ -107,17 +107,17 @@
 	<canvas id="saveCanvas" style="display:none"></canvas>
 
 	<div id="popupCont" class="flex" onclick="hidePopups()">
-		<div id="welcomePopup" class="popup">
+		<div id="welcomePopup" class="popup belowTools">
 			<img src="images/logo.png" height="100px" alt="GO-GN logo1">
 			<img src="images/logo_hands.png" height="100px" alt="GO-GN logo2">
 			<h1>
-				Welcome to Doodlefan 
+				<span class="unbold">Welcome to Doodlefan 
 				<br> 
-				for the GO-GN Picture Book Together
+				for the GO-GN Picture Book </span>Together
 			</h1>
 			<br>
 			<p>
-				Please select a scene to start doodling. 
+				Please <strong>select a scene</strong> to start doodling. 
 			</p>
 			<br>
 			<p>
@@ -133,7 +133,7 @@
 			</p>
 		</div>
 
-		<div id="helpPopup" class="popup hidden">
+		<div id="helpPopup" class="popup hidden belowTools">
 			<h1>Help</h1>
 			<br>
 			<div style="text-align: left;">
@@ -177,6 +177,20 @@
 					If you have any suggestions to further improve Doodlefan please contact <strong>@chrissinerantzi</strong> via Twitter using the hashtag <strong>#Doodlefan</strong>.
 				</p>
 			</div>		
+		</div>
+
+		<div id="savePopup" class="popup hidden belowTools">
+			<table>
+				<tr>
+					<td><p>Enter your name:</p></td>
+					<td><input id="nameInput" type="text" size="10" placeholder="Enter name"></td>
+				</tr>
+				<tr>
+					<td><p>Save as a:</p></td>
+					<td><button onClick="saveImage()">png</button>&nbsp<button onClick="" class=>pdf</button></td>
+				</tr>
+
+			</table>
 		</div>
 	</div>
 

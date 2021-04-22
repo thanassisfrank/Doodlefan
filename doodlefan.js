@@ -305,7 +305,7 @@ function addImage(){
 
 function watermark(ctx){
 	ctx.font = "15px Verdana";
-	ctx.fillStyle = "rgba(0, 0, 0)";
+	ctx.fillStyle = "rgba(150, 150, 150)";
 	ctx.textAlign = "right";
 	text = "Created with Doodlefan licensed under CC-BY-NC"
 	if (nameInput.value) {
@@ -333,10 +333,14 @@ function showElement(elem) {
 }
 
 function hidePopups(){
-	for (let i = 0; i < popups.length; i++) {
-		hideElement(popups[i]);
-	};
-	hideElement(popupCont);
+	active = document.activeElement.tagName;
+	console.log(active)
+	if (active != "INPUT" && active != "BUTTON") {
+		for (let i = 0; i < popups.length; i++) {
+			hideElement(popups[i]);
+		};
+		hideElement(popupCont);
+	}
 }
 
 function openPopup(id) {
