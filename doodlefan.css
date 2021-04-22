@@ -85,7 +85,7 @@ input[type=range]{
     background-color: var(--bg-col);
     border: 1px solid var(--border-col);
     max-width: 30%;
-    padding: 10px;
+    padding: 20px;
     border-radius: 2px;
 }
 
@@ -99,6 +99,10 @@ input[type=range]{
 
 .hidden {
     display: none
+}
+
+.visible {
+    display: inline
 }
 
 /*

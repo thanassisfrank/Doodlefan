@@ -204,7 +204,7 @@ canvas.addEventListener("mousemove", function(){
 canvas.addEventListener("mousedown", function(){
 	prevMouseX = mouseX;
 	prevMouseY = mouseY;
-	if (selectedTool == 4 || selectedTool == 5) textIndex = 0;
+	//if (selectedTool == 5) textIndex = 0;
 	isDrawing = true;
 });
 
@@ -251,7 +251,7 @@ function changeCol(){
 
 function changeWidth(){
 	WIDTH = widthSlider.value;
-	currentWidth.innerHTML = "Width: "+WIDTH+"px";
+	currentWidth.innerHTML = WIDTH+"px";
 	updatePreview();
 };
 
@@ -327,11 +327,21 @@ function saveImage(){
 function hideElement(elem) {
 	elem.classList.add("hidden");
 }
-function hidePopup(){
+
+function showElement(elem) {
+	elem.classList.remove("hidden");
+}
+
+function hidePopups(){
 	for (let i = 0; i < popups.length; i++) {
 		hideElement(popups[i]);
 	};
 	hideElement(popupCont);
+}
+
+function openPopup(id) {
+	showElement(document.getElementById(id));
+	showElement(popupCont);
 }
 
 // main function

@@ -31,10 +31,10 @@
 					<input id="textContent" size="18" placeholder="Your text here " type="text">
 				</p>
 			</td>
-			<td><p id="currentWidth" class="label">Width: 10px</p></td>
+			<td><p class="label">Brush width: <span id="currentWidth">10px</span></p></td>
 			<td rowspan="3" id="previewCell"><p id="textPreview">Aa</p><canvas id="toolPreview"></canvas></td>
 			<td rowspan="3" class="">
-				<p class="label">Select a colour:</p>
+				<p class="label">Colour mixer:</p>
 				<p>R <input type="range" id="redLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="255" value="0"/></p>
 				<p>G <input type="range" id="greenLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="255" value="0"/></p>
 				<p>B <input type="range" id="blueLevel" class="colSlide" onMouseMove="changeCol()" min="0" max="255" value="0"/></p>
@@ -95,7 +95,8 @@
 			<td><button onClick="clearDoodles()">Clear doodles</button></td>
 			<td>
 				<button onClick="saveImage()">Save image</button>
-				<input id="nameInput" type="text" size="10" placeholder="Enter name">
+				<button onClick="openPopup('helpPopup')">Help</button>
+				<input id="nameInput" type="text" size="10" placeholder="Enter name" style="display:none">
 			</td>
 		</tr>
 	</table>
@@ -105,8 +106,8 @@
 	</canvas>
 	<canvas id="saveCanvas" style="display:none"></canvas>
 
-	<div id="popupCont" class="flex" onclick="hidePopup()">
-		<div class="popup">
+	<div id="popupCont" class="flex" onclick="hidePopups()">
+		<div id="welcomePopup" class="popup">
 			<img src="images/logo.png" height="100px" alt="GO-GN logo1">
 			<img src="images/logo_hands.png" height="100px" alt="GO-GN logo2">
 			<h1>
@@ -117,16 +118,69 @@
 			<br>
 			<p>
 				Please select a scene to start doodling. 
-				<br><br> 
+			</p>
+			<br>
+			<p>
 				Check out our <strong>brushes</strong>. There you will find the <strong>text brush</strong> which allows you to add any text you want in any language and doodle with it.
 			</p>
 			<br>
 			<p>
-				You can also doodle using the text of the story by selecting <strong>Story brush</strong>.</p>
+				You can also doodle using the text of the story by selecting <strong>Story brush</strong>.
+			</p>
 			<br>
-			<p>Click anywhere to close this window and start doodling.</p>
+			<p>
+				Click anywhere to close this window and start doodling.
+			</p>
+		</div>
+
+		<div id="helpPopup" class="popup hidden">
+			<h1>Help</h1>
+			<br>
+			<div style="text-align: left;">
+				<p>
+					<strong>Select scene</strong> to use a background to doodle on. You can of course start doodling without using a scene.
+				</p>
+				<br>
+				<p>
+					<strong>Select brush</strong> to start doodling. 
+				</p>
+				<br>
+				<p>
+					Select <strong>text brush</strong> if you would like to add your own text and then doodle with it.
+				</p>
+				<br>
+				<p>
+					When selecting the <strong>Story brush</strong> you can doodle with the whole text of the story.
+				</p>
+				<br>
+				<p>
+					The <strong>text stamp</strong> will also let you add text and then create stamps.
+				</p>
+				<br>
+				<p>
+					Use the slider to adjust the <strong>Brush width</strong>. 
+				</p>
+				<br>
+				<p>
+					Use the <strong>Colour mixer</strong> to change brush colour.
+				</p>
+				<br>
+				<p>
+					Select <strong>Clear doodle</strong> if you want to start again.
+				</p>
+				<br>
+				<p>
+					Click on <strong>Save</strong> to download your doodle and remember to add your name. 
+				</p>
+				<br>
+				<p style="font-size: 0.8em;">
+					If you have any suggestions to further improve Doodlefan please contact <strong>@chrissinerantzi</strong> via Twitter using the hashtag <strong>#Doodlefan</strong>.
+				</p>
+			</div>		
 		</div>
 	</div>
+
+	
 
 	<script src="doodlefan.js"></script>
 </body>
