@@ -99,6 +99,12 @@ saveCanvas.width = canvas.width;
 saveCanvas.height = canvas.height;
 var ctx3 = saveCanvas.getContext("2d");
 
+// previous canvas setup (undo) -------------------------------------------------
+var prevCanvas = document.getElementById("prevCanvas");
+prevCanvas.width = canvas.width;
+prevCanvas.height = canvas.height;
+var ctxPrev = prevCanvas.getContext("2d");
+
 
 // toColString ------------------------------------------------------------------
 
@@ -202,6 +208,7 @@ canvas.addEventListener("mousemove", function(){
 });
 
 canvas.addEventListener("mousedown", function(){
+	saveCanvasState();
 	prevMouseX = mouseX;
 	prevMouseY = mouseY;
 	//if (selectedTool == 5) textIndex = 0;
@@ -231,6 +238,16 @@ function updatePreview(){
 };
 
 updatePreview();
+
+function saveCanvasState() {
+	console.log("saved")
+	ctxPrev.drawImage(canvas, 0, 0);
+}
+
+function undo() {
+	console.log("undo")
+	ctx.drawImage(prevCanvas, 0, 0)
+}
 
 function clearCanvas(){
 	textIndex = 0;
