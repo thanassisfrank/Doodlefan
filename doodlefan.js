@@ -56,16 +56,12 @@ var createImg = (url) => {
 	img.src = url;
 	return img;
 }
-urls = ["images/book/river.png"];//["images/bear1.png", "images/bear2.png", "images/man.png", "images/man2.png", "images/dress.png", "images/dress2.png", "images/book/river.png"]
-pages = [1, 3,  4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 18]
+
 var bgIMGs = ["clear"]
+var opts = bgSelector.children;
 
-for (let i = 0; i < urls.length; i++) {
-	bgIMGs.push(createImg(urls[i]));
-}
-
-for (let i = 0; i < pages.length; i++) {
-	bgIMGs.push(createImg("images/book/page" + pages[i] + ".png"));
+for (let i = 1; i < opts.length; i++) {
+	bgIMGs.push(createImg(opts[i].dataset.src));
 }
 
 // main canvas setup ------------------------------------------------------------
