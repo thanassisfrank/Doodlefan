@@ -57,11 +57,15 @@ var createImg = (url) => {
 	return img;
 }
 
-var bgIMGs = ["clear"]
+var bgIMGs = {0:"clear"};
+
 var opts = bgSelector.children;
 
-for (let i = 1; i < opts.length; i++) {
-	bgIMGs.push(createImg(opts[i].dataset.src));
+for (let i = 0; i < opts.length; i++) {
+	let src = opts[i].dataset.src
+	if (src != undefined) {
+		bgIMGs[i] = createImg(src);
+	}
 }
 
 // main canvas setup ------------------------------------------------------------
