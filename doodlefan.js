@@ -321,14 +321,20 @@ function addImage(){
 };
 
 function watermark(ctx){
-	ctx.font = "15px Verdana";
+	var size = 15;
+	var spacing = 6;
+	var y = canvas.height - spacing;
+	ctx.font = size + "px Verdana";
 	ctx.fillStyle = "rgba(150, 150, 150)";
 	ctx.textAlign = "right";
 	text = "Created with Doodlefan licensed under CC-BY-NC"
 	if (nameInput.value) {
-		text += " remixed by " + nameInput.value;	
-	}
-	ctx.fillText(text, canvas.width-4, canvas.height-6);
+		text += " remixed by";
+		ctx.fillText(text, canvas.width-4, y-size-spacing);
+		ctx.fillText(nameInput.value, canvas.width-4, y);
+	} else {
+		ctx.fillText(text, canvas.width-4, y);
+	};
 };
 
 function saveImage(){
