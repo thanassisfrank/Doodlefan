@@ -98,7 +98,7 @@
 			<td>
 				<button onClick="openPopup('savePopup')">Save doodle</button>
 				<button onClick="openPopup('helpPopup')">Help</button>
-				<button onClick="undo()">Undo</button>
+				<button onClick="undo()" id="undoBtn" disabled>Undo</button>
 			</td>
 		</tr>
 	</table>
@@ -107,7 +107,6 @@
 		sorry, your browser does not seem to support HTML 5 canvas
 	</canvas>
 	<canvas id="saveCanvas" class="hidden"></canvas>
-	<canvas id="prevCanvas" class="hidden"></canvas>
 
 	<div id="popupCont" class="flex" onclick="hidePopups()">
 		<div id="welcomePopup" class="popup belowTools">

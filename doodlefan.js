@@ -19,6 +19,7 @@ var textLabel = document.getElementById("textLabel");
 var nameInput = document.getElementById("nameInput");
 var popups = document.getElementsByClassName("popup");
 var popupCont = document.getElementById("popupCont");
+var undoBtn = document.getElementById("undoBtn");
 
 var inputText
 window.onload = () => {
@@ -100,11 +101,17 @@ saveCanvas.height = canvas.height;
 var ctx3 = saveCanvas.getContext("2d");
 
 // previous canvas setup (undo) -------------------------------------------------
-var prevCanvas = document.getElementById("prevCanvas");
-prevCanvas.width = canvas.width;
-prevCanvas.height = canvas.height;
-var ctxPrev = prevCanvas.getContext("2d");
+const undoNum = 3;
+var newestPtr = -1;
+var ctxPrev = []
+for (let i = 0; i < undoNum; i++) {
+	var prevCanvas = document.createElement("canvas");
+	prevCanvas.width = canvas.width;
+	prevCanvas.height = canvas.height;
+	ctxPrev.push(prevCanvas.getContext("2d"));
+}
 
+var savedStates = 0
 
 // toColString ------------------------------------------------------------------
 
@@ -241,12 +248,23 @@ updatePreview();
 
 function saveCanvasState() {
 	console.log("saved")
-	ctxPrev.drawImage(canvas, 0, 0);
+	newestPtr = (newestPtr + 1) % ctxPrev.length;
+	ctxPrev[newestPtr].drawImage(canvas, 0, 0);
+	savedStates = Math.min(ctxPrev.length, savedStates + 1)
+	undoBtn.disabled = false;
 }
 
 function undo() {
 	console.log("undo")
-	ctx.drawImage(prevCanvas, 0, 0)
+	if (savedStates > 0) {
+		ctx.drawImage(ctxPrev[newestPtr].canvas, 0, 0)
+		newestPtr = (ctxPrev.length + newestPtr-1) % ctxPrev.length;
+		console.log("ptr",newestPtr)
+		savedStates--;
+		if (savedStates == 0) {
+			undoBtn.disabled = true;
+		}	
+	}
 }
 
 function clearCanvas(){
