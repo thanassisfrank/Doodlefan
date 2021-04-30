@@ -393,21 +393,6 @@ function openPopup(id) {
 	showElement(popupCont);
 }
 
-function tweetImg() {
-	uploadImage(getFinalData(canvas));
-}
-function uploadImage(img) {
-	var xhttp = new XMLHttpRequest();
-	xhttp.open("POST", "https://upload.twitter.com/1.1/media/upload.json", true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("media_category=tweet_image&media_data="+img);
-
-	xhttp.onreadystatechange = () => {
-		if (this.readyState == 4 && this.status == 200) {
-			console.log(this.responseText);
-		}
-	}
-}
 // main function
 
 var main = setInterval(function(){
