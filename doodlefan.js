@@ -38,6 +38,7 @@ var mouseX;
 var mouseY;
 var prevMouseX = mouseX;
 var prevMouseY = mouseY;
+var canvasScale = 1;
 var backgroundIMG = "clear";
 var selectedTool = 0;
 var inputText = "";
@@ -72,9 +73,23 @@ for (let i = 0; i < opts.length; i++) {
 // main canvas setup ------------------------------------------------------------
 
 var canvas = document.getElementById("canvas");
-canvas.width = 1169;
-canvas.height = 827;
+canvas.width = 1920;
+canvas.height = 1080;
 var ctx = canvas.getContext("2d");
+
+// scale canvas properly
+function scaleCanvas() {
+	// window height - toolbar size - padding amount
+	var canvasAreaHeight = window.innerHeight - 120 - 10;
+	canvasScale = canvasAreaHeight/canvas.height;
+	var scaledWidth = canvas.width * canvasScale;
+	canvas.style.height = canvasAreaHeight + "px";
+	canvas.style.width = scaledWidth + "px";
+
+}
+scaleCanvas();
+
+
 clearCanvas();
 
 function recalculateOffsets() {
@@ -84,8 +99,14 @@ function recalculateOffsets() {
 };
 recalculateOffsets();
 
-document.body.onscroll = recalculateOffsets;
-document.body.onresize = recalculateOffsets;
+window.addEventListener("scroll", () => {
+	recalculateOffsets();
+});
+window.addEventListener("resize", () => {
+	scaleCanvas();
+	recalculateOffsets();
+	updatePreview();
+});
 
 // brush preview canvas setup ---------------------------------------------------
 
@@ -208,8 +229,8 @@ var tools = [normal, squares, spray, chalk, textStamp, textStroke, storyStroke];
 // canvas events ----------------------------------------------------------------
 
 canvas.addEventListener("mousemove", function(){
-	mouseX = event.clientX - xDrawOffset;
-	mouseY = event.clientY - yDrawOffset;
+	mouseX = (event.clientX - xDrawOffset) / canvasScale;
+	mouseY = (event.clientY - yDrawOffset) / canvasScale;
 });
 
 canvas.addEventListener("mousedown", function(){
@@ -228,7 +249,7 @@ document.body.addEventListener("mouseup", function(){
 
 function updatePreview(){
 	if (selectedTool > 3) {
-		textPreview.style.fontSize = WIDTH +"px";
+		textPreview.style.fontSize = WIDTH * canvasScale +"px";
 		textPreview.style.color = toRGBString(COLOR);
 	} else {
 		var temp1 = prevMouseX;
@@ -236,7 +257,7 @@ function updatePreview(){
 		prevMouseX = 50.0001;
 		prevMouseY = 50.0001;
 		ctx2.clearRect(0,0,100,100);
-		draw(50, 50, ctx2, WIDTH, COLOR);
+		draw(50, 50, ctx2, WIDTH * canvasScale, COLOR);
 		prevMouseX = temp1;
 		prevMouseY = temp2;
 	}
@@ -245,7 +266,7 @@ function updatePreview(){
 updatePreview();
 
 function saveCanvasState() {
-	console.log("saved")
+	// console.log("saved")
 	newestPtr = (newestPtr + 1) % ctxPrev.length;
 	ctxPrev[newestPtr].drawImage(canvas, 0, 0);
 	savedStates = Math.min(ctxPrev.length, savedStates + 1)
@@ -332,7 +353,20 @@ function addImage(){
 		clearCanvas();
 	}else{
 		clearCanvas();
-		ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, canvas.width, canvas.height);
+		// insert image on canvas to ensure a fit, don't crop
+		var canvasAspect = canvas.width/canvas.height;
+		var imgAspect = img.naturalWidth/img.naturalHeight;
+		if (imgAspect > canvasAspect) {
+			// image is wider and shorter than canvas, limited by width
+			var imgScaledHeight = img.naturalHeight * canvas.width/img.naturalWidth;
+			var yOffset = (canvas.height - imgScaledHeight)/2;
+			ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, yOffset, canvas.width, imgScaledHeight);
+		} else {
+			// image is narrower and taller than canvas, limited by height
+			var imgScaledWidth = img.naturalWidth * canvas.height/img.naturalHeight;
+			var xOffset = (canvas.width - imgScaledWidth)/2;
+			ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, xOffset, 0, imgScaledWidth, canvas.height);
+		}
 	};
 };
 
@@ -377,7 +411,7 @@ function showElement(elem) {
 
 function hidePopups(){
 	active = document.activeElement.tagName;
-	console.log(active)
+	// console.log(active)
 	if (active != "INPUT" && active != "BUTTON") {
 		for (let i = 0; i < popups.length; i++) {
 			hideElement(popups[i]);
