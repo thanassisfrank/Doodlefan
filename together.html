@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Together</title>
+        <link rel="stylesheet" href="app.css">
+        <link rel="stylesheet" href="common.css">
+    </head>
+    <body>
+        <iframe src="editor.html"></iframe>
+        <script src="app.js" type="module"></script>
+        <script>
+            // inject information into the child iframe
+            // sets up the editor for the specific app
+            window.frames[0].appData = {
+                images: [
+                    {
+                        name: "image1",
+                        src: "1.png"
+                    }
+                ],
+                brushes: {
+
+                }
+            }
+        </script>
+        <div id="welcome-container" class="popupCont flex">
+            <div id="welcomePopup" class="popup belowTools">
+                <div>
+                    <img src="images/logo.png" height="100px" alt="GO-GN logo1">
+                    <img src="images/logo_hands.png" height="100px" alt="GO-GN logo2">
+                </div>
+                <h1>
+                    <span class="unbold">Welcome to Doodlefan 
+                    <br> 
+                    for the GO-GN Picture Book </span>Together
+                </h1>
+                <br>
+                <p>
+                    Please <strong>select a scene</strong> to start doodling. 
+                </p>
+                <br>
+                <p>
+                    Check out our <strong>brushes</strong>. There you will find the <strong>text brush</strong> which allows you to add any text you want in any language and doodle with it.
+                </p>
+                <br>
+                <p>
+                    You can also doodle using the text of the story by selecting <strong>Story brush</strong>.
+                </p>
+                <br>
+                <p>
+                    Click anywhere to close this window and start doodling.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

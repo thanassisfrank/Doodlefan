@@ -1,0 +1,57 @@
+/* common.css */
+/* handles styling that needs to be applied across add and editor */
+
+:root {
+    --bg-col: #fff8e3;
+    --border-col: black;
+    --button-travel: 2px;
+    --toolbar-height: 120px;
+}
+
+*{
+    font-family:Verdana, Geneva, sans-serif;
+}
+
+body {padding: 0px; margin: 0px}
+
+p {
+    font-size:1em; 
+    margin: 0px;
+}
+
+.popupCont {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 100vh;
+    width: 100vw;
+}
+
+.popup{
+    background-color: var(--bg-col);
+    border: 1px solid var(--border-col);
+    max-width: 50%;
+    max-height: 70%;
+    overflow-y: auto;
+    padding: 20px;
+    border-radius: 2px;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.hidden {
+    display: none
+}
+
+.visible {
+    display: inline
+}
+
+.unbold {
+    font-weight: normal;
+}

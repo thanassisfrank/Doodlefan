@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>Creativity</title>
+        <link rel="stylesheet" href="app.css">
+        <link rel="stylesheet" href="common.css">
+    </head>
+    <body>
+        <iframe src="editor.html"></iframe>
+        <!-- manages the top layer app -->
+        <script src="app.js" type="module"></script>
+        <script>
+            // inject information into the child iframe
+            // sets up the editor for the specific app
+            window.frames[0].appData = {
+                images: [
+                    {
+                        name: "image1",
+                        src: "1.png"
+                    }
+                ],
+                brushes: {
+
+                }
+            }
+        </script>
+        <div id="welcome-container" class="popupCont flex">
+            <div id="welcomePopup" class="popup">
+                <div>
+                    <img src="images/logo1.png" height="100px" alt="GO-GN logo1">
+                    <img src="images/logo2.png" height="100px" alt="GO-GN logo2">
+                </div>
+                <h1>
+                    <span class="unbold">Welcome to Doodlefan for</span>
+                    <br> 
+                    Creativity
+                </h1>
+                <br>
+                <p>
+                    How many different pictures can you make using the shapes? An idea based on Torrance E P (1974) Torrance Tests of Creative Thinking, Lexington, MA: Personnel Press
+                </p>
+                <br>
+                <p>
+                    Please <strong>select a scene</strong> to start doodling. 
+                </p>
+                <br>
+                <p>
+                    Check out our <strong>brushes</strong>. There you will find the <strong>text brush</strong> which allows you to add any text you want in any language and doodle with it.
+                </p>
+                <br>
+                <p>
+                    You can also doodle using the <strong>Creativity Manifesto</strong>.
+                </p>
+                <br>
+                <p>
+                    Click anywhere to close this window and start doodling.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>
