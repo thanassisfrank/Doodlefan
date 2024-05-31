@@ -24,7 +24,7 @@ var popups = document.getElementsByClassName("popup");
 var popupCont = document.getElementById("popupCont");
 var undoBtn = document.getElementById("undoBtn");
 
-var inputText
+var inputText;
 
 
 // throughout, colors are represented in arrays in the form [r,g,b,a]
@@ -80,11 +80,11 @@ var ctx = canvas.getContext("2d");
 
 // scale canvas properly
 function getFullCanvasScale() {
-	// window height - toolbar size - padding amount
-	var areaHeightStr = getComputedStyle(document.getElementById("edit-area-container")).height;
+	var areaHeightStr = getComputedStyle(get("edit-area-container")).height;
 	var areaHeight = parseFloat(areaHeightStr.substring(0, areaHeightStr.length - 2));
-	console.log(areaHeight);
-	return areaHeight/canvas.height *0.9;
+	var areaWidthStr = getComputedStyle(get("edit-area-container")).width;
+	var areaWidth = parseFloat(areaWidthStr.substring(0, areaWidthStr.length - 2));
+	return Math.min(areaHeight/canvas.height, areaWidth/canvas.width) * 0.9;
 }
 
 function setCanvasScale(scale) {
