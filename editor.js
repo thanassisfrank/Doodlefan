@@ -4,7 +4,7 @@
 // latest commit: 06-2024
 // version 0.1
 
-import {get, getClass} from "./utils.js";
+import {get, getClass, create} from "./utils.js";
 
 // get HTML objects -------------------------------------------------------------
 
@@ -36,7 +36,7 @@ var prevMouseX = mouseX;
 var prevMouseY = mouseY;
 var canvasScale = 1;
 var backgroundIMG = "clear";
-var selectedTool = 0;
+var selectedTool = "Normal";
 var inputText = "";
 
 var firstCall = true;
@@ -53,23 +53,23 @@ var xDrawOffset = 0;
 var yDrawOffset = 0;
 
 // image fetching ---------------------------------------------------------------
-var createImg = (url) => {
-	var img = new Image();
-	img.crossOrigin = "Anonymous";
-	img.src = url;
-	return img;
-}
+// var createImg = (url) => {
+// 	var img = new Image();
+// 	img.crossOrigin = "Anonymous";
+// 	img.src = url;
+// 	return img;
+// }
 
-var bgIMGs = {0:"clear"};
+// // var bgIMGs = {0:"clear"};
 
-var opts = bgSelector.children;
+// // var opts = bgSelector.children;
 
-for (let i = 0; i < opts.length; i++) {
-	let src = opts[i].dataset.src
-	if (src != undefined) {
-		bgIMGs[i] = createImg(src);
-	}
-}
+// // for (let i = 0; i < opts.length; i++) {
+// // 	let src = opts[i].dataset.src
+// // 	if (src != undefined) {
+// // 		bgIMGs[i] = createImg(src);
+// // 	}
+// // }
 
 // main canvas setup ------------------------------------------------------------
 
@@ -217,7 +217,16 @@ var creativeStroke = function (x ,y, context, width, color) {textStroke(x ,y, co
 var togetherStory = "Together: One, two, three friends are on an adventure to build a playground. Look! What a BIG bucket you have. All the better to collect water with! MY water! MY water! Go away! Go away! One, two, three friends move on without delay. What a BIG web you have! All the easier to stop you with! MY water! MY water! Go away! Go away! Ok, ok, ok! One, two, three friends move on without delay. Look! What a BIG mouth you have! All the better to eat you with! MY water! MY water! Go away! Go away! Then suddenly ... It gets darker and darker ... and the waves get bigger and bigger. They splash and they crash. Oh no! Help! Help! Help! Help! Hold on! I've got you! Help! Help! Watch! Watch! Big wave! Big wave! I'll get it! That was so close. One, two, three, four, five, six friends build a playground. Look!";
 var togetherStroke = function (x ,y, context, width, color) {textStroke(x ,y, context, width, color, togetherStory)}
 
-var tools = [normal, squares, spray, chalk, textStamp, textStroke, creativeStroke, togetherStroke];
+var tools = {
+	"Normal": normal, 
+	"Squares": squares, 
+	"Spray": spray, 
+	"Chalk": chalk, 
+	"Text stamp": textStamp, 
+	"Text stroke": textStroke, 
+	"Creativity Manifesto": creativeStroke, 
+	"Together story": togetherStroke
+};
 
 // canvas events ----------------------------------------------------------------
 
@@ -302,16 +311,16 @@ function changeWidth(){
 	updatePreview();
 };
 
-function changeTool(){
-	selectedTool = toolSelector.selectedIndex;
-	if (selectedTool == 4 || selectedTool == 5) {
+function changeTool(name){
+	selectedTool = name;
+	if (selectedTool == "Text Stamp" || selectedTool == "Text stroke") {
 		textContent.style.display = "inline";
 		textLabel.style.display = "inline";	
 
 		textPreview.style.display = "inline";
 
 		toolPreview.style.display = "none";
-	}else if (selectedTool > 5) {
+	}else if (selectedTool == "Creativity Manifesto" || selectedTool == "Together story") {
 		textContent.style.display = "none";
 		textLabel.style.display = "none";	
 
@@ -331,34 +340,40 @@ function changeTool(){
 };
 
 function draw(x, y, context, width, color){
-	if (selectedTool == 4 || selectedTool == 5) {
+	if (selectedTool == "Text Stamp" || selectedTool == "Text stroke") {
 		tools[selectedTool](x, y, context, width, color, inputText)
 	} else {
 		tools[selectedTool](x, y, context, width, color);
 	}
 };
 
-function addImage(){
-	var ind = bgSelector.selectedIndex;
-	console.log(ind);
-	var img = bgIMGs[ind];
-	if(img == "clear"){
-		clearCanvas();
-	}else{
-		clearCanvas();
+async function addImage(url){
+	console.log(url);
+	clearCanvas();
+	if(url){    
+        let response = await fetch(url, {method: "GET"})
+    
+        if (response.status != 200) {
+			console.log("image couldn't be fetched");
+			return;
+		}
+            
+        const imgBlob = await response.blob()
+		const img = await createImageBitmap(imgBlob);
+		console.log(img);
 		// insert image on canvas to ensure a fit, don't crop
 		var canvasAspect = canvas.width/canvas.height;
-		var imgAspect = img.naturalWidth/img.naturalHeight;
+		var imgAspect = img.width/img.height;
 		if (imgAspect > canvasAspect) {
 			// image is wider and shorter than canvas, limited by width
-			var imgScaledHeight = img.naturalHeight * canvas.width/img.naturalWidth;
+			var imgScaledHeight = img.height * canvas.width/img.width;
 			var yOffset = (canvas.height - imgScaledHeight)/2;
-			ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, yOffset, canvas.width, imgScaledHeight);
+			ctx.drawImage(img, 0, 0, img.width, img.height, 0, yOffset, canvas.width, imgScaledHeight);
 		} else {
 			// image is narrower and taller than canvas, limited by height
-			var imgScaledWidth = img.naturalWidth * canvas.height/img.naturalHeight;
+			var imgScaledWidth = img.width * canvas.height/img.height;
 			var xOffset = (canvas.width - imgScaledWidth)/2;
-			ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, xOffset, 0, imgScaledWidth, canvas.height);
+			ctx.drawImage(img, 0, 0, img.width, img.height, xOffset, 0, imgScaledWidth, canvas.height);
 		}
 	};
 };
@@ -450,14 +465,14 @@ function main() {
 	// setup the input elements
 	inputText = textContent.placeholder;
 	textContent.addEventListener("change", (e) => {
-		inputText = e.value + " ";
+		inputText = e.target.value + " ";
 		textIndex = 0;
 		updatePreview();
 	});
 	console.log(window.appData);
 
 	toolSelector.addEventListener("change", (e) => {
-		changeTool();
+		changeTool(e.target.value);
 	})
 
 	for (let slider of getClass("colSlide")) {
@@ -465,7 +480,7 @@ function main() {
 	}
 
 	get("backgroundSelector").addEventListener("change", (e) => {
-		addImage();
+		addImage(e.target.value);
 	});
 
 	get("widthSlider").addEventListener("input", (e) => {
@@ -491,6 +506,27 @@ function main() {
 	get("save-btn").addEventListener("click", (e) => {
 		saveImage();
 	})
+
+	// setup the correct tools
+	selectedTool = "Normal"
+	var toolSelectorElem = get("toolSelector");
+	var toolNames = window.appData.brushes;
+	for (let toolName of toolNames) {
+		var optElem = create("OPTION");
+		optElem.value = toolName;                
+		optElem.innerText = toolName;
+		toolSelectorElem.appendChild(optElem);
+	}
+
+	// setup the correct background images
+	var imageSelectorElem = get("backgroundSelector");
+	var images = window.appData.images;
+	for (let image of images) {
+		var optElem = create("OPTION");
+		optElem.value = image.src;                
+		optElem.innerText = image.name;
+		imageSelectorElem.appendChild(optElem);
+	}
 
 	mainLoop();
 }
