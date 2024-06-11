@@ -12,7 +12,11 @@
     font-family:Verdana, Geneva, sans-serif;
 }
 
-body {padding: 0px; margin: 0px}
+body {
+    background-color: var(--bg-col);
+    padding: 0px; 
+    margin: 0px
+}
 
 p {
     font-size:1em; 
