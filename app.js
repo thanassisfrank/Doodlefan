@@ -3,7 +3,7 @@
 import {get, hide} from "./utils.js";
 
 document.body.onload = function () {
-    get("welcome-container").addEventListener("click", (e) => {
-        hide(get("welcome-container"));
-    });
+    // get("welcome-container").addEventListener("click", (e) => {
+    //     hide(get("welcome-container"));
+    // });
 }

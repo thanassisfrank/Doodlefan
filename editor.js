@@ -228,25 +228,6 @@ var tools = {
 	"Together story": togetherStroke
 };
 
-// canvas events ----------------------------------------------------------------
-
-canvas.addEventListener("mousemove", function(e){
-	mouseX = (e.clientX - xDrawOffset) / canvasScale;
-	mouseY = (e.clientY - yDrawOffset) / canvasScale;
-});
-
-canvas.addEventListener("mousedown", function(){
-	saveCanvasState();
-	prevMouseX = mouseX;
-	prevMouseY = mouseY;
-	//if (selectedTool == 5) textIndex = 0;
-	isDrawing = true;
-});
-
-document.body.addEventListener("mouseup", function(){
-	isDrawing = false;
-});
-
 // functions --------------------------------------------------------------------
 
 function updatePreview(){
@@ -527,6 +508,42 @@ function main() {
 		optElem.innerText = image.name;
 		imageSelectorElem.appendChild(optElem);
 	}
+
+	// canvas events ----------------------------------------------------------------
+
+	canvas.addEventListener("mousemove", function(e){
+		mouseX = (e.clientX - xDrawOffset) / canvasScale;
+		mouseY = (e.clientY - yDrawOffset) / canvasScale;
+	});
+	canvas.addEventListener("touchmove", function(e){
+		mouseX = (e.clientX - xDrawOffset) / canvasScale;
+		mouseY = (e.clientY - yDrawOffset) / canvasScale;
+	});
+	canvas.addEventListener("mousedown", function(){
+		saveCanvasState();
+		prevMouseX = mouseX;
+		prevMouseY = mouseY;
+		//if (selectedTool == 5) textIndex = 0;
+		isDrawing = true;
+	});
+	canvas.addEventListener("touchstart", function(){
+		saveCanvasState();
+		prevMouseX = mouseX;
+		prevMouseY = mouseY;
+		//if (selectedTool == 5) textIndex = 0;
+		isDrawing = true;
+	});
+
+	document.body.addEventListener("mouseup", function(){
+		isDrawing = false;
+	});
+	document.body.addEventListener("touchend", function(){
+		isDrawing = false;
+	});
+	document.body.addEventListener("touchcancel", function(){
+		isDrawing = false;
+	});
+
 
 	mainLoop();
 }
