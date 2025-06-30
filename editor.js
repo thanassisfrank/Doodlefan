@@ -265,13 +265,12 @@ canvas.addEventListener("touchstart", function(e){
 canvas.addEventListener("touchmove", function(e){
 	for (const touch of e.changedTouches) {
 		if (touch.identifier !== currentTouchID) continue;
+		e.preventDefault();
 		
 		mouseX = (touch.clientX - xDrawOffset) / canvasScale;
 		mouseY = (touch.clientY - yDrawOffset) / canvasScale;
 	}
-
-	return false;
-});
+}, { passive: false });
 
 canvas.addEventListener("touchend", function(e){
 	for (const touch of e.changedTouches) {
