@@ -230,21 +230,65 @@ var tools = {
 
 // canvas events ----------------------------------------------------------------
 
+canvas.addEventListener("mousedown", function(){
+	saveCanvasState();
+	prevMouseX = mouseX;
+	prevMouseY = mouseY;
+	isDrawing = true;
+});
+
 canvas.addEventListener("mousemove", function(e){
 	mouseX = (e.clientX - xDrawOffset) / canvasScale;
 	mouseY = (e.clientY - yDrawOffset) / canvasScale;
 });
 
-canvas.addEventListener("mousedown", function(){
+document.body.addEventListener("mouseup", function(){
+	isDrawing = false;
+});
+
+// touch events
+let currentTouchID = null;
+
+canvas.addEventListener("touchstart", function(e){
+	if (currentTouchID !== null) return;
+	const newTouch = e.changedTouches[0];
+	currentTouchID = newTouch.identifier;
+
 	saveCanvasState();
-	prevMouseX = mouseX;
-	prevMouseY = mouseY;
-	//if (selectedTool == 5) textIndex = 0;
+	prevMouseX = (newTouch.clientX - xDrawOffset) / canvasScale;
+	prevMouseY = (newTouch.clientY - yDrawOffset) / canvasScale;
+	mouseX = prevMouseX;
+	mouseY = prevMouseY;
 	isDrawing = true;
 });
 
-document.body.addEventListener("mouseup", function(){
-	isDrawing = false;
+canvas.addEventListener("touchmove", function(e){
+	for (const touch of e.changedTouches) {
+		if (touch.identifier !== currentTouchID) continue;
+		
+		mouseX = (touch.clientX - xDrawOffset) / canvasScale;
+		mouseY = (touch.clientY - yDrawOffset) / canvasScale;
+	}
+
+	return false;
+});
+
+canvas.addEventListener("touchend", function(e){
+	for (const touch of e.changedTouches) {
+		if (touch.identifier !== currentTouchID) continue;
+		
+		isDrawing = false;
+		currentTouchID = null;
+	}
+});
+
+canvas.addEventListener("touchcancel", function(e){
+	for (const touch of e.changedTouches) {
+		if (touch.identifier !== currentTouchID) continue;
+		
+		isDrawing = false;
+		currentTouchID = null;
+	}
 });
 
 // functions --------------------------------------------------------------------
